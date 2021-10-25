@@ -18,10 +18,6 @@ namespace PII
             new User(Guid.Parse("52e943e6-aa54-4604-b7f2-b432bf227233"), "Yin", "Yang")
         };
 
-        [UseFiltering]
-        [UseSorting]
-        public IQueryable<User> GetUsers() => _users.AsQueryable();
-
-        public User? GetUser(Guid userId) => _users.FirstOrDefault(x => x.Id == userId);
+        public User? GetUserById(Guid userId) => _users.FirstOrDefault(x => x.Id == userId);
     }
 }

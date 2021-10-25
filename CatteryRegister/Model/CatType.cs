@@ -11,6 +11,7 @@ namespace CatteryRegister.Model
         protected override void Configure(IObjectTypeDescriptor<Cat> descriptor)
         {
             base.Configure(descriptor);
+            
             descriptor.Field("image")
                 .Resolve((cx, ct) =>
                 {

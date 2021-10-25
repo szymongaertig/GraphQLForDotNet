@@ -1,6 +1,10 @@
+using System;
 using CatteryRegister.DataContext;
+using CatteryRegister.Exceptions;
 using CatteryRegister.Model;
 using HotChocolate.Types.Pagination;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -28,10 +32,13 @@ namespace CatteryRegister
                 b.UseNpgsql(GetConnectionString()));
 
             services.AddTransient<ParentsService>();
-            
+            services.AddHttpClient("pii",
+                (sp, client) => { client.BaseAddress = new Uri("https://localhost:5002/graphql"); });
+
             services
                 .AddGraphQLServer()
                 .AddQueryType<Query>()
+                .AddMutationType<Mutation>()
                 .AddType<CatType>()
                 .AddType<ParentType>()
                 .AddFiltering()
@@ -41,14 +48,27 @@ namespace CatteryRegister
                 .SetPagingOptions(new PagingOptions
                 {
                     IncludeTotalCount = true
-                });
+                })
+                .AddRemoteSchema("pii", ignoreRootTypes: true)
+                .AddTypeExtensionsFromFile("Stitching.Graphql")
+                .AddAuthorization();
 
+            services.AddErrorFilter<GraphQlErrorFilter>();
             services.AddHostedService<DbInitializer>();
+            services.AddAuthorization();
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultScheme
+                        = CatteryAuthenticationHandler.Schema;
+                })
+                .AddScheme<AuthenticationSchemeOptions, CatteryAuthenticationHandler>
+                    (CatteryAuthenticationHandler.Schema, op => { });
+            services.AddScoped<UserContext>();
         }
 
         private string GetConnectionString()
         {
-            var result =  _configuration.GetConnectionString("PostgreSqlConnectionString");
+            var result = _configuration.GetConnectionString("PostgreSqlConnectionString");
             return result;
         }
 
@@ -57,6 +77,9 @@ namespace CatteryRegister
         {
             app
                 .UseRouting()
+                .UseAuthentication()
+                .UseAuthorization()
+                .UseMiddleware<AuthMiddleware>()
                 .UseEndpoints(endpoints => { endpoints.MapGraphQL(); });
         }
     }

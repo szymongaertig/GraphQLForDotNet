@@ -1,0 +1,3 @@
+﻿extend type Cattery {
+    owner: User @delegate(schema:"pii", path: "userById(userId: $fields:ownerId)")
+}
