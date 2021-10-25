@@ -27,6 +27,8 @@ namespace CatteryRegister
             services.AddDbContext<CatteryDbContext>(b =>
                 b.UseNpgsql(GetConnectionString()));
 
+            services.AddTransient<ParentsService>();
+            
             services
                 .AddGraphQLServer()
                 .AddQueryType<Query>()
@@ -35,6 +37,7 @@ namespace CatteryRegister
                 .AddFiltering()
                 .AddSorting()
                 .AddProjections()
+                .AddDataLoader<ParentsDataLoader>()
                 .SetPagingOptions(new PagingOptions
                 {
                     IncludeTotalCount = true

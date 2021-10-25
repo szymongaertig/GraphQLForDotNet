@@ -2,6 +2,7 @@
 using System.Linq;
 using CatteryRegister.DataContext;
 using HotChocolate.Types;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
 
 namespace CatteryRegister.Model
 {
@@ -21,7 +22,16 @@ namespace CatteryRegister.Model
                 .Resolve<Parents?>((cx, ct) =>
                 {
                     var childId = cx.Parent<Cat>().Id;
-                    return GenealogicalTree.Source.FirstOrDefault(x => x.ChildId == childId);
+                    var parentsService = cx.Service<ParentsService>();
+                    return parentsService.GetParents(childId);
+                });
+
+            descriptor.Field("parentsWithLoader")
+                .Resolve<Parents?>(async (cx, ct) =>
+                {
+                    var childId = cx.Parent<Cat>().Id;
+                    var parentsService = cx.Service<ParentsDataLoader>();
+                    return await parentsService.LoadAsync(childId, ct);
                 });
         }
     }
