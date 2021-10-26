@@ -2,9 +2,9 @@ using System;
 using CatteryRegister.DataContext;
 using CatteryRegister.Exceptions;
 using CatteryRegister.Model;
+using CatteryRegister.Services;
 using HotChocolate.Types.Pagination;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -54,6 +54,7 @@ namespace CatteryRegister
                 .AddAuthorization();
 
             services.AddErrorFilter<GraphQlErrorFilter>();
+            services.AddSingleton<RandomCatImageClient>();
             services.AddHostedService<DbInitializer>();
             services.AddAuthorization();
             services.AddAuthentication(options =>

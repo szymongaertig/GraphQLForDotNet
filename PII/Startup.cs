@@ -22,7 +22,11 @@ namespace PII
         {
             app
                 .UseRouting()
-                .UseEndpoints(endpoints => { endpoints.MapGraphQL(); });
+                .UseEndpoints(endpoints =>
+                {
+                    endpoints.MapGraphQL();
+                    
+                });
         }
     }
 }

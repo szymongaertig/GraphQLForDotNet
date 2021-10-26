@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using HotChocolate.Data;
+﻿using System.Linq;
 using PII.Model;
 
 namespace PII
@@ -9,15 +7,15 @@ namespace PII
     {
         private static User[] _users =
         {
-            new User(Guid.Parse("369164dd-be3b-41b2-9c75-d1cf6fe79c8b"), "Grzegorz", "Brzęczyszczykiewicz"),
-            new User(Guid.Parse("98aa7676-8d0c-447b-8590-aececfb4d842"), "Memphis", "Raines"),
-            new User(Guid.Parse("6b99c185-dd65-4e3f-a204-32a0a7819e60"), "Marion", "Cabretti"),
-            new User(Guid.Parse("5598e809-89b9-480a-8f57-b8e1ce833563"), "John", "Matrix"),
-            new User(Guid.Parse("2cabd14a-8a5e-46a1-8a23-1e54c80926a6"), "Ivan", "Danko"),
-            new User(Guid.Parse("1643eeab-c564-4d73-8ffb-5d57cc5ec807"), "Lee", "Christms"),
-            new User(Guid.Parse("52e943e6-aa54-4604-b7f2-b432bf227233"), "Yin", "Yang")
+            new User(1, "Grzegorz", "Brzęczyszczykiewicz"),
+            new User(2, "Memphis", "Raines"),
+            new User(3, "Marion", "Cabretti"),
+            new User(4, "John", "Matrix"),
+            new User(5, "Ivan", "Danko"),
+            new User(6, "Lee", "Christms"),
+            new User(7, "Yin", "Yang")
         };
 
-        public User? GetUserById(Guid userId) => _users.FirstOrDefault(x => x.Id == userId);
+        public User? GetUserById(int userId) => _users.FirstOrDefault(x => x.Id == userId);
     }
 }

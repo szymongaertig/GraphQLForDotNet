@@ -25,6 +25,8 @@ namespace CatteryRegister
                     userContext.Permissions = permissionsClaims.Select(x => x.Value.ToString()).ToArray();
                 }
             }
+
+            await _next.Invoke(context);
         }
     }
 }

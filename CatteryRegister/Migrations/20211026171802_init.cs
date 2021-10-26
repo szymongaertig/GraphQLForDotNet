@@ -19,7 +19,7 @@ namespace CatteryRegister.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    OwnerId = table.Column<Guid>(type: "uuid", nullable: false)
+                    OwnerId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {

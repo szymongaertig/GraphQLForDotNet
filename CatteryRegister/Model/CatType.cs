@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Linq;
 using CatteryRegister.DataContext;
+using CatteryRegister.Services;
 using HotChocolate.Types;
-using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
 
 namespace CatteryRegister.Model
 {
@@ -11,12 +10,19 @@ namespace CatteryRegister.Model
         protected override void Configure(IObjectTypeDescriptor<Cat> descriptor)
         {
             base.Configure(descriptor);
-            
+
             descriptor.Field("image")
-                .Resolve((cx, ct) =>
+                .Resolve(async (cx, ct) =>
                 {
                     var parentCat = cx.Parent<Cat>();
-                    return new Image(parentCat.ImageId);
+                    var randomCatPicture = cx.Service<RandomCatImageClient>();
+                    //return new Image(parentCat.ImageId);
+                    var picture = await randomCatPicture.Search();
+                    return new Image
+                    {
+                        Large = picture.url,
+                        Small = picture.url
+                    };
                 });
 
             descriptor.Field("parents")
@@ -39,6 +45,10 @@ namespace CatteryRegister.Model
 
     public class Image
     {
+        public Image()
+        {
+        }
+
         public string Large { get; set; }
         public string Small { get; set; }
 
