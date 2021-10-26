@@ -3,6 +3,7 @@ using CatteryRegister.DataContext;
 using CatteryRegister.Exceptions;
 using CatteryRegister.Model;
 using CatteryRegister.Services;
+using HotChocolate.AspNetCore.Subscriptions;
 using HotChocolate.Types.Pagination;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
@@ -35,6 +36,7 @@ namespace CatteryRegister
             services.AddHttpClient("pii",
                 (sp, client) => { client.BaseAddress = new Uri("https://localhost:5002/graphql"); });
 
+
             services
                 .AddGraphQLServer()
                 .AddQueryType<Query>()
@@ -48,11 +50,8 @@ namespace CatteryRegister
                 .SetPagingOptions(new PagingOptions
                 {
                     IncludeTotalCount = true
-                })
-                .AddRemoteSchema("pii", ignoreRootTypes: true)
-                .AddTypeExtensionsFromFile("Stitching.Graphql")
-                .AddAuthorization();
-
+                });
+            
             services.AddErrorFilter<GraphQlErrorFilter>();
             services.AddSingleton<RandomCatImageClient>();
             services.AddHostedService<DbInitializer>();

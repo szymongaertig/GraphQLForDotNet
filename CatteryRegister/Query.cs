@@ -37,6 +37,16 @@ namespace CatteryRegister
             return dbContext.Set<Cattery>();
         }
 
+        public Cattery GetCattery()
+        {
+            return new Cattery()
+            {
+                Id = 11,
+                Name = "TestCattery",
+                OwnerId = 2
+            };
+        }
+
         [Authorize]
         public string? NotAnonymous()
         {

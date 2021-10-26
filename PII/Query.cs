@@ -16,6 +16,6 @@ namespace PII
             new User(7, "Yin", "Yang")
         };
 
-        public User? GetUserById(int userId) => _users.FirstOrDefault(x => x.Id == userId);
+        public User? GetUserById(int? userId) => _users.FirstOrDefault(x => x.Id == userId);
     }
 }
