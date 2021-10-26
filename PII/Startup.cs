@@ -25,7 +25,6 @@ namespace PII
                 .UseEndpoints(endpoints =>
                 {
                     endpoints.MapGraphQL();
-                    
                 });
         }
     }

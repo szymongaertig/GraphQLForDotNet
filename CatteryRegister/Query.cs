@@ -12,17 +12,19 @@ namespace CatteryRegister
 {
     public class Query
     {
+        [UseDbContext(typeof(CatteryDbContext))]
         [UsePaging]
         //[UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Cat> GetCats([Service] CatteryDbContext dbContext)
+        public IQueryable<Cat> GetCats([ScopedService] CatteryDbContext dbContext)
         {
             return dbContext.Set<Cat>()
                 .Include(x => x.Litter).ThenInclude(x => x.Cattery);
         }
 
-        public Task<Cat> GetCat(int id, [Service] CatteryDbContext dbContext)
+        [UseDbContext(typeof(CatteryDbContext))]
+        public Task<Cat> GetCat(int id, [ScopedService] CatteryDbContext dbContext)
         {
             return dbContext.Set<Cat>()
                 .Include(x => x.Litter)
