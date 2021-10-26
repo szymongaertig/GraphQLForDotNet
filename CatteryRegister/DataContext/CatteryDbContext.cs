@@ -15,6 +15,7 @@ namespace CatteryRegister.DataContext
             modelBuilder.Entity<Cat>(c =>
             {
                 c.ToTable("cats", "cr");
+                c.Property(x => x.Id).UseHiLo();
                 c.HasKey(x => x.Id);
                 c.Property(x => x.Name).IsRequired();
                 c.HasOne(x => x.Litter)
@@ -25,6 +26,7 @@ namespace CatteryRegister.DataContext
             modelBuilder.Entity<Cattery>(c =>
             {
                 c.ToTable("catteries", "cr");
+                c.Property(x => x.Id).UseHiLo();
                 c.HasKey(x => x.Id);
                 c.Property(x => x.Name).IsRequired();
                 c.Property(x => x.OwnerId).IsRequired();
@@ -34,6 +36,7 @@ namespace CatteryRegister.DataContext
             modelBuilder.Entity<Litter>(c =>
             {
                 c.ToTable("litters", "cr");
+                c.Property(x => x.Id).UseHiLo();
                 c.HasKey(x => x.Id);
                 c.Property(x => x.Code).IsRequired();
                 c.Property(x => x.CreationDate).IsRequired();

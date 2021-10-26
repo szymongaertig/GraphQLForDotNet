@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PII.Model
+﻿namespace PII.Model
 {
     public class User
     {

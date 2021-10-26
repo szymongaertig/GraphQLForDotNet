@@ -4,6 +4,7 @@ using CatteryRegister.Exceptions;
 using CatteryRegister.Model;
 using HotChocolate;
 using HotChocolate.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace CatteryRegister
 {
@@ -12,21 +13,19 @@ namespace CatteryRegister
         public async Task<Cattery?> CreateCattery(string name,
             [Service] CatteryDbContext dbContext)
         {
-            switch (name)
-            {
-                case "already_used":
-                    throw new BusinessException("cattery-with-given-name-exists");
-                    break;
-            }
-
-            return new Cattery()
+            if (await dbContext.Set<Cattery>().AnyAsync(x => x.Name == name))
+                throw new BusinessException("cattery-name-already-used");
+            var result = (await dbContext.AddAsync(new Cattery
             {
                 Name = name
-            };
+            })).Entity;
+
+            await dbContext.SaveChangesAsync();
+            return result;
         }
 
         [Authorize]
-        public string DeleteCattery(int id, [Service]UserContext context)
+        public string DeleteCattery(int id, [Service] UserContext context)
         {
             if (!context.IsAdmin() && !context.IsCatteryOwner(id))
                 throw new BusinessException("forbidden");
