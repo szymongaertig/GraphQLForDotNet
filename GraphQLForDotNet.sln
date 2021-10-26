@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway", "Gateway\Gateway.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatteryRegister.Tests", "CatteryRegister.Tests\CatteryRegister.Tests.csproj", "{E930D27D-9D69-4B08-9E2E-660CCF551BBC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetLicence", "GetLicence\GetLicence.csproj", "{496312F8-787E-4270-8444-6CD978EB0BCF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,5 +36,9 @@ Global
 		{E930D27D-9D69-4B08-9E2E-660CCF551BBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E930D27D-9D69-4B08-9E2E-660CCF551BBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E930D27D-9D69-4B08-9E2E-660CCF551BBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{496312F8-787E-4270-8444-6CD978EB0BCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{496312F8-787E-4270-8444-6CD978EB0BCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{496312F8-787E-4270-8444-6CD978EB0BCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{496312F8-787E-4270-8444-6CD978EB0BCF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
