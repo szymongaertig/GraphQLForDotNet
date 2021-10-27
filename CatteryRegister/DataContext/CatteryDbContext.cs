@@ -43,6 +43,9 @@ namespace CatteryRegister.DataContext
                 c.HasOne(x => x.Cattery)
                     .WithMany(x => x.Litters)
                     .IsRequired();
+
+                c.HasMany<Cat>(x => x.Cats)
+                    .WithOne(x => x.Litter);
             });
             base.OnModelCreating(modelBuilder);
         }

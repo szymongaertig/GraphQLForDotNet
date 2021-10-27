@@ -20,7 +20,8 @@ namespace CatteryRegister
         public IQueryable<Cat> GetCats([ScopedService] CatteryDbContext dbContext)
         {
             return dbContext.Set<Cat>()
-                .Include(x => x.Litter).ThenInclude(x => x.Cattery);
+                .Include(x => x.Litter)
+                .ThenInclude(x => x.Cattery);
         }
 
         [UseDbContext(typeof(CatteryDbContext))]
@@ -31,10 +32,13 @@ namespace CatteryRegister
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        [UsePaging]
         [UseFiltering]
+        [UseSorting]
         public IQueryable<Cattery> GetCatteries([Service] CatteryDbContext dbContext)
         {
-            return dbContext.Set<Cattery>();
+            return dbContext.Set<Cattery>()
+                .Include(x => x.Litters).ThenInclude(x => x.Cats);
         }
 
         public Cattery GetCattery()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CatteryRegister.Model
 {
@@ -8,5 +9,6 @@ namespace CatteryRegister.Model
         public string Code { get; set; }
         public DateTime CreationDate { get; set; }
         public Cattery Cattery { get; set; }
+        public ICollection<Cat> Cats { get; set; }
     }
 }
